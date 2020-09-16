@@ -38,6 +38,7 @@ using namespace std;
 #include <QProgressBar>
 #include <QDebug>
 #include <QMessageBox>
+#include <QHostInfo>
 
 #include "simmessage.h"
 #include "module.h"
@@ -798,7 +799,8 @@ void SimMessage::FinishSimulation(int Status)
 
   if(Status == 0) {
     if(SimOpt) { // save optimization data
-      QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
+      QString hostname = QHostInfo::localHostName();
+      QFile ifile(QucsSettings.QucsHomeDir.filePath(hostname+".dat"));
       QFile ofile(DataSet);
       if(ifile.open(QIODevice::ReadOnly)) {
 	if(ofile.open(QIODevice::WriteOnly)) {

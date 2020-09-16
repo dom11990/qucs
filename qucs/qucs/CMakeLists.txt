@@ -63,6 +63,7 @@ find_package(
   QtGui
   Qt3Support
   QtSvg
+  QtNetwork
   QtXml
   QtScript
   QtTest)

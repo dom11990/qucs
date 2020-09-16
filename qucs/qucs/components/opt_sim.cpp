@@ -20,6 +20,7 @@
 #include <QRegExp>
 #include <QString>
 #include <QStringList>
+#include <QHostInfo>
 
 #include "opt_sim.h"
 #include "qucs.h"
@@ -258,8 +259,11 @@ bool Optimize_Sim::loadASCOout()
       vars += pp->Value.section('|',0,0);
     }
   }
-
-  QFile infile(QucsSettings.QucsHomeDir.filePath("asco_out.log"));
+  //asco uses the machine hostname for the log files now
+  QString hostname = QHostInfo::localHostName();
+  
+//  QFile infile(QucsSettings.QucsHomeDir.filePath(hostname +".log"));
+  QFile infile(QucsSettings.QucsHomeDir.filePath(hostname+".log"));
   if(!infile.open(QIODevice::ReadOnly)) return false;
   QTextStream instream(&infile);
   QString Line;
