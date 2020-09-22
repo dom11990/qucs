@@ -267,8 +267,15 @@ bool Optimize_Sim::loadASCOout()
   if(!infile.open(QIODevice::ReadOnly)) return false;
   QTextStream instream(&infile);
   QString Line;
+  QString Line_optimum;
   // we need just the last line with the final result
-  while(!instream.atEnd()) Line = instream.readLine();
+  //--dom: actually we want the second to last line as the optimizer tries to outperform
+  //its best match, until it fails to do so
+  QString Line_last;
+  while(!instream.atEnd()) {
+    Line = Line_last; 
+    Line_last = instream.readLine();
+  }
   infile.close();
 
   QStringList entries = Line.split(':');
